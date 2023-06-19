@@ -11,5 +11,10 @@ namespace DepthChart.Function
                 players.Add(i, new PlayerModel(0, ""));
             }
         }
+
+        public static void ToOutPutString(this PlayerModel player)
+        {
+            Console.WriteLine($"#{player.GetNumber()} - {player.GetName()}");
+        }
     }
 }

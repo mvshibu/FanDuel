@@ -46,6 +46,16 @@ namespace DepthChart.Tests.ModelsTest
             Assert.Equal("TestPlayer3", addedPlayer4.GetName());
 
         }
+
+        [Fact]
+        public void ShouldAddPlayerToLastIfPositionDepthMissing()
+        {
+            nflModel.AddPlayerToDepthChart("LWR", players[0]);
+            var addedPlayer1 = nflModel.GetPlayerFromDepthChart("LWR", 4);
+            Assert.Equal(11, addedPlayer1.GetNumber());
+            Assert.Equal("TestPlayer1", addedPlayer1.GetName());
+        }
+
         [Fact]
         public void ShouldNotAddPlayerIfPositionIsFull()
         {
@@ -90,6 +100,15 @@ namespace DepthChart.Tests.ModelsTest
             Assert.Equal(2, backups.Count);
             Assert.Equal(14, backups[0].GetNumber());
             Assert.Equal(15, backups[1].GetNumber());
+        }
+
+        [Fact]
+        public void ShouldRetrunEmtyListIfPlayerNotPresentInPosition()
+        {
+            nflModel.AddPlayerToDepthChart("LWR", players[0], 0);
+            nflModel.AddPlayerToDepthChart("LWR", players[1], 1);
+            var backups = nflModel.GetBackups("LWR", players[2]);
+            Assert.Equal(0, backups.Count);
         }
     }
 }

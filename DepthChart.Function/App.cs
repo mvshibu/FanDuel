@@ -1,6 +1,8 @@
 using CommandLine;
+using DepthChart.Function.InputParser;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace DepthChart.Function
 {
@@ -25,8 +27,29 @@ namespace DepthChart.Function
 
         private void RunOptions(Options opts)
         {
-            Console.WriteLine("Awesome CLI ⚡ 1.0.0");
-            //Console.WriteLine("props= {0}", string.Join(",", opts.Props));
+            if (!string.IsNullOrEmpty(opts.Action))
+            {
+                switch (opts.Action)
+                {
+                    case "add":
+                        var addModel = JsonConvert.DeserializeObject<AddDataModel>(opts.Param);
+                        Console.WriteLine(addModel?.position);
+                        Console.WriteLine(addModel?.depth);
+                        break;
+                    case "remove":
+
+                        break;
+                    case "backup":
+
+                        break;
+                    case "full":
+
+                        break;
+                    default:
+                        Console.WriteLine("Not valid action.");
+                        break;
+                }
+            }
         }
         private void HandleParseError(IEnumerable<Error> errs)
         {

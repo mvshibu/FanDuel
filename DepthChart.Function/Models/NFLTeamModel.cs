@@ -19,8 +19,12 @@ namespace DepthChart.Function.Models
             this.Charts = new List<ChartModel>();
         }
 
-        public bool AddPlayerToDepthChart(string position, PlayerModel player, int position_depth)
+        public bool AddPlayerToDepthChart(string position, PlayerModel player, int position_depth = -1)
         {
+            if (position_depth == -1)
+            {
+                position_depth = this.Depth_Limit - 1;
+            }
             bool playerAdded = false;
             if (this.Charts.Where(p => p.GetPostion() == position.ToUpper()).Count() == 0)
             {
