@@ -2,7 +2,8 @@ using Microsoft.Extensions.Logging;
 
 namespace DepthChart.Function.Models
 {
-    public class NFLTeamModel
+
+    public class NFLTeamModel : INFLTeamModel
     {
         private readonly string Name;
         private readonly int Depth_Limit;
@@ -27,6 +28,8 @@ namespace DepthChart.Function.Models
                 if (chartPosition.CanAddPlayer(position_depth))
                 {
                     chartPosition.AddPlayer(position_depth, player);
+                    this.Charts.Add(chartPosition);
+                    playerAdded = true;
                 }
                 return playerAdded;
             }
@@ -40,6 +43,17 @@ namespace DepthChart.Function.Models
             return playerAdded;
         }
 
+        public PlayerModel GetPlayerFromDepthChart(string position, int depth)
+        {
+            PlayerModel player = new PlayerModel(0, "");
+            if (IsValidPosition(position))
+            {
+                var pos = this.Charts.Where(q => q.GetPostion() == position.ToUpper()).First();
+                var pl = pos.GetPlayer(depth);
+                player = new PlayerModel(pl.GetNumber(), pl.GetName());
+            }
+            return player;
+        }
         public PlayerModel RemovePlayerFromDepthChart(string position, PlayerModel player)
         {
             PlayerModel removedPlayer = new PlayerModel(0, "");
