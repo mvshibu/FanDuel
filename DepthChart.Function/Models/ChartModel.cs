@@ -54,5 +54,15 @@ namespace DepthChart.Function.Models
             }
             return added;
         }
+
+        public PlayerModel GetPlayer(int depth)
+        {
+            PlayerModel player = new PlayerModel(0, "");
+            if (this.Players.ContainsKey(depth))
+            {
+                player = new PlayerModel(this.Players[depth].GetNumber(), this.Players[depth].GetName());
+            }
+            return player;
+        }
     }
 }
