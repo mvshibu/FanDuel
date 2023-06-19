@@ -25,7 +25,3 @@ bld/
 **/build/
 **/dist/
 
-**/bin
-**/obj/
-
-**/bin/Debug/net6.0/
