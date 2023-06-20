@@ -13,46 +13,58 @@ namespace DepthChart.Function.Services
             this.nflTeamModel = nflTeamModel;
         }
 
-        public void AddPlayerToDepthChart(string position, PlayerModel player, int position_depth)
+        public string AddPlayerToDepthChart(string position, PlayerModel player, int position_depth)
         {
             var added = this.nflTeamModel.AddPlayerToDepthChart(position, player, position_depth);
             if (added)
-                Console.WriteLine("Player added successfully");
+                return "Player Added";
             else
-                Console.WriteLine("Failed to add Player!");
+                return "Failed to add Player!";
         }
 
-        public void GetBackups(string position, PlayerModel player)
+        public List<string> GetBackups(string position, PlayerModel player)
         {
+            List<string> outputColl = new List<string>();
             var players = this.nflTeamModel.GetBackups(position, player);
             if (players.Count == 0)
             {
-                Console.WriteLine("<NO LIST>");
+                outputColl.Add(OutputExtensions.ToEmptyData());
             }
             else
             {
-                foreach (var pl in players)
+                outputColl.AddRange(players.Select(p => p.ToOutPutString()));
+            }
+            return outputColl;
+        }
+
+        public List<string> GetFullDepthChart()
+        {
+            List<string> outputColl = new List<string>();
+            foreach (var chart in this.nflTeamModel.GetFullDepthChart())
+            {
+                if (chart.GetPlayers().Count > 0)
                 {
-                    pl.ToOutPutString();
+                    outputColl.Add(chart.ToOutPutString());
+                }
+                else
+                {
+                    outputColl.Add($"{chart.GetPostion()} - " + OutputExtensions.ToEmptyData());
                 }
             }
+
+            return outputColl;
         }
 
-        public void GetFullDepthChart()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemovePlayerFromDepthChart(string position, PlayerModel player)
+        public string RemovePlayerFromDepthChart(string position, PlayerModel player)
         {
             var removedPlayer = this.nflTeamModel.RemovePlayerFromDepthChart(position, player);
             if (!string.IsNullOrEmpty(removedPlayer.GetName()))
             {
-                Console.WriteLine($"#{removedPlayer.GetNumber()} - {removedPlayer.GetName()}");
+                return removedPlayer.ToOutPutString();
             }
             else
             {
-                Console.WriteLine("<NO LIST>");
+                return OutputExtensions.ToEmptyData();
             }
         }
     }

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace DepthChart.Function.Models
@@ -10,13 +11,16 @@ namespace DepthChart.Function.Models
 
         private readonly List<ChartModel> Charts;
         private readonly ILogger<NFLTeamModel> logger;
+        private readonly IConfiguration config;
 
-        public NFLTeamModel(string name, int depth_limit, ILogger<NFLTeamModel> logger)
+        public NFLTeamModel(IConfiguration config, ILogger<NFLTeamModel> logger)
         {
-            this.Name = name;
-            this.Depth_Limit = depth_limit;
+            this.config = config;
+            this.Name = config.GetValue<string>("TeamName");
+            this.Depth_Limit = config.GetValue<int>("Depth_Limit");
             this.logger = logger;
             this.Charts = new List<ChartModel>();
+
         }
 
         public bool AddPlayerToDepthChart(string position, PlayerModel player, int position_depth = -1)

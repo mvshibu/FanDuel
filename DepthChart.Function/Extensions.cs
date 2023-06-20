@@ -12,9 +12,25 @@ namespace DepthChart.Function
             }
         }
 
-        public static void ToOutPutString(this PlayerModel player)
+
+    }
+    public static class OutputExtensions
+    {
+        public static string ToOutPutString(this PlayerModel player)
         {
-            Console.WriteLine($"#{player.GetNumber()} - {player.GetName()}");
+            return $"#{player.GetNumber()} - {player.GetName()}";
+        }
+        public static string ToFullOutPutString(this PlayerModel player)
+        {
+            return $"(#{player.GetNumber()}, {player.GetName()})";
+        }
+        public static string ToOutPutString(this ChartModel chart)
+        {
+            return $"{chart.GetPostion()} - " + string.Join(",", chart.GetPlayers().Select(p => p.ToFullOutPutString()));
+        }
+        public static string ToEmptyData()
+        {
+            return "<NO LIST>";
         }
     }
 }

@@ -1,5 +1,6 @@
 using DepthChart.Function.Models;
 using DepthChart.Tests.Fixtures;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
@@ -16,7 +17,10 @@ namespace DepthChart.Tests.ModelsTest
 
         public NFLTeamModelTests()
         {
-            this.nflModel = new NFLTeamModel("Team1", 5, this.logger);
+            IConfiguration config = new ConfigurationBuilder()
+                                    .AddJsonFile("appsettings.json")
+                                    .Build();
+            this.nflModel = new NFLTeamModel(config, this.logger);
             this.players = PlayerFixtures.GetPlayers();
         }
         [Fact]

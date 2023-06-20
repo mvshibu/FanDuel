@@ -5,9 +5,9 @@ namespace DepthChart.Function.Services
     public interface IDepthChartService
     {
         string Sport { get; set; }
-        void AddPlayerToDepthChart(string position, PlayerModel player, int position_depth);
-        void GetBackups(string position, PlayerModel player);
-        void GetFullDepthChart();
-        void RemovePlayerFromDepthChart(string position, PlayerModel player);
+        string AddPlayerToDepthChart(string position, PlayerModel player, int position_depth);
+        List<string> GetBackups(string position, PlayerModel player);
+        List<string> GetFullDepthChart();
+        string RemovePlayerFromDepthChart(string position, PlayerModel player);
     }
 }

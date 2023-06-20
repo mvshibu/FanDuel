@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DepthChart.Function;
-
+using DepthChart.Function.Services;
 
 var host = CreateHostBuilder(args).Build();
 
@@ -16,5 +16,7 @@ static IHostBuilder CreateHostBuilder(string[] args)
     return Host.CreateDefaultBuilder(args)
         .ConfigureServices(
             (_, services) => services
-                .AddSingleton<App>());
+                .AddSingleton<App>()
+                .AddSingleton<IDepthChartFactory, DepthChartFactory>()
+                .AddSingleton<IDepthChartService, NFLDepthChartService>());
 }

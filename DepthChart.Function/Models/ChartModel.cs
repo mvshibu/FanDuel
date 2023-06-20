@@ -91,5 +91,15 @@ namespace DepthChart.Function.Models
             }
             return player;
         }
+
+        public List<PlayerModel> GetPlayers()
+        {
+            List<PlayerModel> players = new List<PlayerModel>();
+            if (this.Players.Count > 0 && this.Players.Where(p => !string.IsNullOrEmpty(p.Value.GetName())).Any())
+            {
+                players.AddRange(this.Players.Where(p => !string.IsNullOrEmpty(p.Value.GetName())).Select(q => q.Value).ToList());
+            }
+            return players;
+        }
     }
 }
