@@ -14,4 +14,17 @@ namespace DepthChart.Function.InputParser
         public string name { get; set; }
         public int number { get; set; }
     }
+
+    public class RBDataModel
+    {
+        public string position { get; set; }
+        public PlayerInputModel player { get; set; }
+    }
+    public static class AddDataModelExtensions
+    {
+        public static PlayerModel ToPlayerModel(this PlayerInputModel playerInputModel)
+        {
+            return new PlayerModel(playerInputModel.number, playerInputModel.name);
+        }
+    }
 }
